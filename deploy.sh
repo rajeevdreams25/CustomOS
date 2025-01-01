@@ -6,42 +6,6 @@ echo "Updating package lists..."
  
 PYTHON_SCRIPT="code/main.py"                        
 
-
-if ! command -v git &> /dev/null; then
-    echo "Git is not installed. Please install Git and try again."
-    exit 1
-fi
-
-
-if ! command -v python3 &> /dev/null; then
-    echo "Python3 is not installed. Please install Python3 and try again."
-    exit 1
-fi
-
-if ! command -v pip3 &> /dev/null; then
-    echo "Pip3 is not installed. Please install Pip3 and try again."
-    echo "Installing Python3 and pip..."
-
-    # Check if the "OS" folder already exists
-    if [ -d "OS" ]; then
-        echo "'OS' directory already exists. Skipping virtual environment creation."
-    else
-        echo "Creating a virtual environment in the 'OS' folder..."
-        python3 -m venv OS
-    fi
-    
-    # Now change into the "OS" directory, if exists
-    cd OS || { echo "Failed to change directory to OS."; exit 1; }
-
-    # Optionally, activate the virtual environment if it's a new creation
-    if [ ! -z "$(ls -A)" ]; then
-        echo "Activating the virtual environment..."
-        source bin/activate
-        cd ..
-    fi
-fi
-
-
 echo "Installing packages"
 pip3 install --upgrade pip
 pip3 install -r requirements.txt
