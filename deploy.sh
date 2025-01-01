@@ -3,6 +3,8 @@ set -e
 
 
 echo "Updating package lists..."
+
+apk add gcc
  
 PYTHON_SCRIPT="code/main.py"                        
 

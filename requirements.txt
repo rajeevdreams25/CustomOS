@@ -1,1 +1,1 @@
-kivy
+pyqt5

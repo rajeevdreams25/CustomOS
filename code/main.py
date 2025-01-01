@@ -1,37 +1,61 @@
-from kivy.app import App
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.button import Button
-from kivy.uix.image import Image
-from kivy.uix.floatlayout import FloatLayout
-from kivy.core.window import Window
+import sys
+from PyQt5.QtWidgets import QApplication, QPushButton, QLabel, QVBoxLayout, QWidget
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtCore import Qt
 
 
-class FullScreenImageApp(App):
-    def build(self):
-        # Set the window size to fullscreen
-        Window.fullscreen = True
+class FullScreenImageApp(QWidget):
+    def __init__(self):
+        super().__init__()
 
-        # Create the main layout
-        layout = FloatLayout()
+        # Set the window to fullscreen
+        self.showFullScreen()
+
+        # Create a layout
+        layout = QVBoxLayout()
+        layout.setContentsMargins(0, 0, 0)
+        layout.setSpacing(0)
 
         # Add the background image
-        background = Image(source="background.jpg", allow_stretch=True, keep_ratio=False)
-        layout.add_widget(background)
+        self.background_label = QLabel(self)
+        pixmap = QPixmap("img/background.jpg")  # Replace with your image file
+        self.background_label.setPixmap(pixmap)
+        self.background_label.setScaledContents(True)
+        self.background_label.setAlignment(Qt.AlignCenter)
+        layout.addWidget(self.background_label)
 
         # Add the Login button
-        login_button = Button(
-            text="Login",
-            size_hint=(0.2, 0.1),  # Size of the button relative to the screen
-            pos_hint={"center_x": 0.5, "center_y": 0.5},  # Center the button
-            font_size="20sp",
-            background_color=(0.2, 0.6, 0.8, 1),  # Set button background color
-            color=(1, 1, 1, 1),  # Set button text color
-        )
-        layout.add_widget(login_button)
+        self.login_button = QPushButton("Login", self)
+        self.login_button.setStyleSheet("""
+            QPushButton {
+                font-size: 20px;
+                color: white;
+                background-color: #3399CC;
+                border-radius: 10px;
+                padding: 10px;
+            }
+            QPushButton:hover {
+                background-color: #2D89B0;
+            }
+        """)
+        self.login_button.setFixedSize(200, 50)
+        self.login_button.clicked.connect(self.on_login_clicked)
 
-        return layout
+        # Add the button to the layout
+        self.background_label.setLayout(layout)
+        self.login_button.setParent(self.background_label)  # Set the button over the image
+        self.login_button.move(
+            self.width() // 2 - self.login_button.width() // 2,
+            self.height() // 2 - self.login_button.height() // 2
+        )
+
+    def on_login_clicked(self):
+        print("Login button clicked!")
 
 
 # Run the app
 if __name__ == "__main__":
-    FullScreenImageApp().run()
+    app = QApplication(sys.argv)
+    window = FullScreenImageApp()
+    window.show()
+    sys.exit(app.exec_())
