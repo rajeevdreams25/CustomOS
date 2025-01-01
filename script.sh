@@ -24,9 +24,11 @@ if [ -d "$REPO_NAME" ]; then
     echo "Repository '$REPO_NAME' already exists. Pulling latest changes..."
     cd "$REPO_NAME"
     git pull
+    cd ..
 else
     git clone "$REPO_URL"
     cd "$REPO_NAME"
+    cd ..
 fi
 
 
