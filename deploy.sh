@@ -34,7 +34,7 @@ fi
 if ! command -v pip3 &> /dev/null; then
     echo "Pip3 is not installed. Please install Pip3 and try again."
     echo "Installing Python3 and pip..."
-    apk add --no-cache python3 py3-pip build-base
+    apk add --no-cache python3 py3-pip3 build-base
     exit 1
 fi
 
