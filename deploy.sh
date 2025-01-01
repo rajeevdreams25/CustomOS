@@ -5,6 +5,9 @@ set -e
 echo "Updating package lists..."
 
 apk add gcc
+apk update
+apk add py3-pip python3-dev build-base qt5-qtbase-dev qt5-qttools-dev mesa-dev
+
  
 PYTHON_SCRIPT="code/main.py"                        
 
