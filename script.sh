@@ -35,12 +35,16 @@ fi
 echo "Script executed successfully."
 echo "---------------------------------------------------------"
 
+pwd
+
 if [ -d "OS" ]; then
     echo "'OS' directory already exists. Skipping virtual environment creation."
 else
     echo "Creating a virtual environment in the 'OS' folder..."
     python3 -m venv OS
 fi
+
+pwd
 
 # Now change into the "OS" directory, if exists
 cd OS || { echo "Failed to change directory to OS."; exit 1; }
