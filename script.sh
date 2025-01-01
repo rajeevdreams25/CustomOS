@@ -44,10 +44,22 @@ else
     python3 -m venv OS
 fi
 
-pwd
 
-# Now change into the "OS" directory, if exists
-cd OS || { echo "Failed to change directory to OS."; exit 1; }
+TARGET_DIR="OS"
+
+if [ -d "$TARGET_DIR" ]; then
+    echo "Directory '$TARGET_DIR' exists. Changing to it..."
+    cd "$TARGET_DIR" || { echo "Failed to change directory to '$TARGET_DIR'."; exit 1; }
+else
+    echo "Directory '$TARGET_DIR' does not exist. Creating it..."
+    mkdir "$TARGET_DIR"
+    cd "$TARGET_DIR" || { echo "Failed to change directory to '$TARGET_DIR'."; exit 1; }
+fi
+
+
+echo "Now in directory: $(pwd)"
+
+# cd OS || { echo "Failed to change directory to OS."; exit 1; }
 
 # Optionally, activate the virtual environment if it's a new creation
 if [ ! -z "$(ls -A)" ]; then
