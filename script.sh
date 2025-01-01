@@ -48,7 +48,7 @@ fi
 TARGET_DIR="OS"
 
 if [ -d "$TARGET_DIR" ]; then
-    echo "Directory '$TARGET_DIR' exists. Changing to it..."
+    # echo "Directory '$TARGET_DIR' exists. Changing to it..."
     cd "$TARGET_DIR" || { echo "Failed to change directory to '$TARGET_DIR'."; exit 1; }
 else
     echo "Directory '$TARGET_DIR' does not exist. Creating it..."
@@ -59,12 +59,26 @@ fi
 
 echo "Now in directory: $(pwd)"
 
+TARGET_DIRS="bin"
+
+if [ -d "$TARGET_DIRS" ]; then
+    # echo "Directory '$TARGET_DIRS' exists. Changing to it..."
+    cd "$TARGET_DIRS" || { echo "Failed to change directory to '$TARGET_DIR'."; exit 1; }
+else
+    echo "Directory '$TARGET_DIR' does not exist. Creating it..."
+    mkdir "$TARGET_DIRS"
+    cd "$TARGET_DIRS" || { echo "Failed to change directory to '$TARGET_DIR'."; exit 1; }
+fi
+
+
+echo "Now in directory: $(pwd)"
+
 # cd OS || { echo "Failed to change directory to OS."; exit 1; }
 
 # Optionally, activate the virtual environment if it's a new creation
 if [ ! -z "$(ls -A)" ]; then
     echo "Activating the virtual environment..."
-    source bin/activate
+    source activate
     cd ..
 fi
 
