@@ -1,8 +1,11 @@
 
 set -e
 
+
+echo "Updating package lists..."
+
 REPO_URL="https://github.com/rajeevdreams25/CustomOS.git"  
-PYTHON_SCRIPT="main.py"                        
+PYTHON_SCRIPT="code/main.py"                        
 
 
 if ! command -v git &> /dev/null; then
@@ -27,6 +30,18 @@ else
     git clone "$REPO_URL"
     cd "$REPO_NAME"
 fi
+
+if ! command -v pip3 &> /dev/null; then
+    echo "Pip3 is not installed. Please install Pip3 and try again."
+    echo "Installing Python3 and pip..."
+    apk add --no-cache python3 py3-pip build-base
+    exit 1
+fi
+
+
+echo "Installing packages"
+pip3 install --upgrade pip
+pip3 install -r requirements.txt
 
 if [ -f "$PYTHON_SCRIPT" ]; then
     echo "Running the Python script..."
