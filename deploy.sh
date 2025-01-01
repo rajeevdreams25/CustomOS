@@ -28,15 +28,20 @@ if ! command -v pip3 &> /dev/null; then
     else
         echo "Creating a virtual environment in the 'OS' folder..."
         python3 -m venv OS
-        cd OS
     fi
     
-    exit 1
+    # Now change into the "OS" directory, if exists
+    cd OS || { echo "Failed to change directory to OS."; exit 1; }
+
+    # Optionally, activate the virtual environment if it's a new creation
+    if [ ! -z "$(ls -A)" ]; then
+        echo "Activating the virtual environment..."
+        source bin/activate
+        cd ..
+    fi
 fi
 
 
-source ./bin/activate
-cd ..
 echo "Installing packages"
 pip3 install --upgrade pip
 pip3 install -r requirements.txt
