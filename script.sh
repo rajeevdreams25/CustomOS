@@ -35,51 +35,26 @@ fi
 echo "Script executed successfully."
 echo "---------------------------------------------------------"
 
-pwd
+VENV_DIR="OS"
 
-if [ -d "OS" ]; then
-    echo "'OS' directory already exists. Skipping virtual environment creation."
+if [ -d "$VENV_DIR" ]; then
+    echo "Virtual environment '$VENV_DIR' found. Activating it..."
+    source "$VENV_DIR/bin/activate" || { echo "Failed to activate the virtual environment."; exit 1; }
 else
-    echo "Creating a virtual environment in the 'OS' folder..."
-    python3 -m venv OS
+    echo "Virtual environment '$VENV_DIR' does not exist. Creating it..."
+    python3 -m venv "$VENV_DIR" || { echo "Failed to create virtual environment."; exit 1; }
+    echo "Activating the newly created virtual environment..."
+    source "$VENV_DIR/bin/activate" || { echo "Failed to activate the virtual environment."; exit 1; }
 fi
 
-
-TARGET_DIR="OS"
-
-if [ -d "$TARGET_DIR" ]; then
-    # echo "Directory '$TARGET_DIR' exists. Changing to it..."
-    cd "$TARGET_DIR" || { echo "Failed to change directory to '$TARGET_DIR'."; exit 1; }
+if [ -n "$VIRTUAL_ENV" ]; then
+    echo "Virtual environment activated: $VIRTUAL_ENV"
 else
-    echo "Directory '$TARGET_DIR' does not exist. Creating it..."
-    mkdir "$TARGET_DIR"
-    cd "$TARGET_DIR" || { echo "Failed to change directory to '$TARGET_DIR'."; exit 1; }
+    echo "Failed to activate the virtual environment."
+    exit 1
 fi
 
+echo "You are now in the virtual environment. Add your commands here."
 
-echo "Now in directory: $(pwd)"
-
-TARGET_DIRS="bin"
-
-if [ -d "$TARGET_DIRS" ]; then
-    # echo "Directory '$TARGET_DIRS' exists. Changing to it..."
-    cd "$TARGET_DIRS" || { echo "Failed to change directory to '$TARGET_DIR'."; exit 1; }
-else
-    echo "Directory '$TARGET_DIR' does not exist. Creating it..."
-    mkdir "$TARGET_DIRS"
-    cd "$TARGET_DIRS" || { echo "Failed to change directory to '$TARGET_DIR'."; exit 1; }
-fi
-
-
-echo "Now in directory: $(pwd)"
-
-# cd OS || { echo "Failed to change directory to OS."; exit 1; }
-
-# Optionally, activate the virtual environment if it's a new creation
-if [ ! -z "$(ls -A)" ]; then
-    echo "Activating the virtual environment..."
-    source activate
-    cd ..
-fi
 
 echo "******************************************************"
